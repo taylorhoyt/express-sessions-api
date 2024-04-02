@@ -11,12 +11,6 @@ async function insertSession(session, userId){
     return insertedId;
 }
 
-// gets all sessions from database TODO (REMOVE - DEBUG)
-async function getSessions() {
-    const database = await getDatabase();
-    return await database.collection(collectionName).find({}).toArray();
-}
-
 // gets a session by id
 async function getSessionById(sessionId){
     const database = await getDatabase();
@@ -32,7 +26,6 @@ async function getUserSessionIds(userId){
 
 module.exports = {
     insertSession,
-    getSessions,
     getSessionById,
     getUserSessionIds
 };
