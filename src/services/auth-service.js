@@ -14,8 +14,4 @@ const checkJwt = jwt({
     algorithms: ['RS256']
 });
 
-function getUserIdFromJwt(req){
-    return req.user.sub;
-}
-
 module.exports = checkJwt;
