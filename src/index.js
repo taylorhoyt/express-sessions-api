@@ -6,10 +6,16 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const {startDatabase} = require('./database/mongo');
 const {insertSession} = require('./database/sessions');
-const sessionsRoutes = require('./routes/sessions-routes')
+const sessionsRoutes = require('./routes/sessions-routes');
+const path = require('path');
 
 // define express app
 const app = express();
+app.use(express.static('public'));
+
+app.get('/', function(req, res) {
+	res.sendFile(path.join(__dirname + '/public/index.html'))
+});
 
 // helmet enhances api security
 app.use(helmet());
