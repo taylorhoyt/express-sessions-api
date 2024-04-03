@@ -1,16 +1,15 @@
 const { expressjwt: jwt } = require("express-jwt");
 const jwksRsa = require('jwks-rsa');
-const envVariables = require('../../env-api-variables.json');
 
 const checkJwt = jwt({
     secret: jwksRsa.expressJwtSecret({
         cache: true,
         rateLimit: true,
         jwksRequestsPerMinute: 5,
-        jwksUri: envVariables.jwksUri
+        jwksUri: process.env.JWKS_URI
     }),
-    audience: envVariables.audience,
-    issuer: envVariables.issuer,
+    audience: process.env.AUDIENCE,
+    issuer: process.env.ISSUER,
     algorithms: ['RS256']
 });
 

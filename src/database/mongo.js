@@ -1,12 +1,10 @@
-const {MongoMemoryServer} = require ('mongodb-memory-server');
 const {MongoClient} = require('mongodb');
 
 let database = null;
 
 async function startDatabase() {
-	const mongo = await MongoMemoryServer.create();
-	const mongoDBURL = mongo.getUri();
-	const connection = await MongoClient.connect(mongoDBURL);
+	const mongoDBURL = process.env.MONGODB_URL;
+	const connection = await MongoClient.connect(mongoDBURL, { serverSelectionTimeoutMS: 50000 });
 	database = connection.db();
 }
 
