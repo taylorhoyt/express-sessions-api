@@ -4,6 +4,19 @@ const Session = require('../models/session.js');
 
 const collectionName = 'sessions';
 
+// gets all sessions from the database // TODO: DEV ONLY - REMOVE
+async function getAllSessions(){
+    const database = await getDatabase();
+    return await database.collection(collectionName).find().toArray();
+}
+
+// deletes a session from the database
+async function deleteSession(sessionId) {
+    const database = await getDatabase();
+    return await database.collection(collectionName).deleteOne({_id: new ObjectId(sessionId)});
+}
+
+// inserts a session
 async function insertSession(session, userId){
     const database = await getDatabase();
     const currentSession = new Session(userId, new Date().toJSON() ,session.label, session.data, session.time);
