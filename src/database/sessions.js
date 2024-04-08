@@ -7,7 +7,8 @@ const collectionName = 'sessions';
 // gets all sessions from the database // TODO: DEV ONLY - REMOVE
 async function getAllSessions(){
     const database = await getDatabase();
-    return await database.collection(collectionName).find().toArray();
+    const allSessions = await database.collection(collectionName).find().toArray();
+    return allSessions.map(session => session._id.toString());
 }
 
 // deletes a session from the database
@@ -38,6 +39,8 @@ async function getUserSessionIds(userId){
 }
 
 module.exports = {
+    getAllSessions,
+    deleteSession,
     insertSession,
     getSessionById,
     getUserSessionIds

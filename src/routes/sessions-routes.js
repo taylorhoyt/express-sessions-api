@@ -1,5 +1,5 @@
 const express = require('express');
-const {insertSession, getSessionById, getUserSessionIds} = require("../database/sessions");
+const {getAllSessions, deleteSession,insertSession, getSessionById, getUserSessionIds} = require("../database/sessions");
 const router = express.Router();
 
 // GET endpoint - gets one session by id
@@ -34,7 +34,18 @@ router.get('/users/:userId', async (req, res) => {
     catch(err) {
         res.status(500).send(`An error occurred while fetching session IDs for user ID: ${req.params.userId}`);
     }
-})
+});
+
+// GET endpoint - gets all sessions // TODO: DEV ONLY - REMOVE
+router.get('/dev/all', async (req, res) => {
+    try{
+        res.json(await getAllSessions());
+    }
+    catch(err) {
+        res.status(500).send('An error occurred while fetching data!!');
+        console.log(err);
+    }
+});
 
 // POST endpoint - inserts a new session for a user
 router.post('/:userId', async (req, res) => {
@@ -51,6 +62,16 @@ router.post('/:userId', async (req, res) => {
     catch(err) {
         res.status(500).send(`An error occurred while inserting session for user ID: ${req.params.userId}`);
     }
+});
+
+// DELETE endpoint - deletes a session for a particular sessionId
+router.delete('/:sessionId', async (req, res) => {
+   try {
+       res.json(await deleteSession(req.params.sessionId));
+   }
+   catch(err) {
+       res.status(500).send(`An error occurred while deleting session for sessionID: ${req.params.sessionId}`);
+   }
 });
 
 module.exports = router;
