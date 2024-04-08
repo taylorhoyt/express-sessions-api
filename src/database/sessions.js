@@ -35,7 +35,9 @@ async function getSessionById(sessionId){
 async function getUserSessionIds(userId){
     const database = await getDatabase();
     const userSessions = await database.collection(collectionName).find({userId: userId}).toArray();
-    return userSessions.map(session => session._id.toString());
+    return userSessions.map(session => {
+        return { sessionId: session._id.toString(), label: session.label };
+    });
 }
 
 module.exports = {
